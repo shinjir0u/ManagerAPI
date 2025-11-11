@@ -104,5 +104,7 @@
 	<modules>
 		<module>web</module>
 		<module>githubApi</module>
+		<module>service</module>
+		<module>core</module>
 	</modules>
 </project>

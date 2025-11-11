@@ -7,26 +7,15 @@
 		<artifactId>manager</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>githubApi</artifactId>
+	<artifactId>core</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.squareup.retrofit2</groupId>
-			<artifactId>retrofit</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.squareup.retrofit2</groupId>
-			<artifactId>converter-gson</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.repository</groupId>
-			<artifactId>core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
 </project>
