@@ -71,6 +71,11 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>com.repository</groupId>
+				<artifactId>core</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -87,7 +92,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<plugin>
+<!--			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -98,7 +103,7 @@
 						</exclude>
 					</excludes>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 	<modules>
@@ -107,4 +112,5 @@
 		<module>service</module>
 		<module>core</module>
 	</modules>
+
 </project>
