@@ -62,7 +62,7 @@ public class AuthenticationControllerTest {
 		verify(authorizationService).getUserAccessToken(any(String.class));
 	}
 
-	public static AuthorizationApiResponse convertJsonStringToJson(String jsonString)
+	private static AuthorizationApiResponse convertJsonStringToJson(String jsonString)
 			throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.readValue(jsonString, AuthorizationApiResponse.class);
