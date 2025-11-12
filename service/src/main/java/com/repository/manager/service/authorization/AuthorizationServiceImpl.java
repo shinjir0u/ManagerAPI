@@ -1,7 +1,6 @@
 package com.repository.manager.service.authorization;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import com.repository.manager.githubApi.api.GithubAuthApi;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 @Service
@@ -32,23 +30,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	}
 
 	@Override
-	public AuthorizationApiResponse getUserAccessToken(String code) throws InterruptedException, ExecutionException {
-		CompletableFuture<AuthorizationApiResponse> completableFuture = new CompletableFuture<>();
+	public AuthorizationApiResponse getUserAccessToken(String code) throws IOException {
 		Call<AuthorizationApiResponse> call = githubAuthApi.getUserAccessToken(code, dotenv.get("CLIENT_ID"),
 				dotenv.get("CLIENT_SECRET"));
-		call.enqueue(new Callback<AuthorizationApiResponse>() {
-
-			@Override
-			public void onResponse(Call<AuthorizationApiResponse> call, Response<AuthorizationApiResponse> response) {
-				completableFuture.complete(response.body());
-			}
-
-			@Override
-			public void onFailure(Call<AuthorizationApiResponse> call, Throwable t) {
-				completableFuture.completeExceptionally(t);
-			}
-		});
-		return completableFuture.get();
+		Response<AuthorizationApiResponse> response = call.execute();
+		if (response.isSuccessful())
+			return response.body();
+		throw new IOException("Response Error");
 	}
 
 }

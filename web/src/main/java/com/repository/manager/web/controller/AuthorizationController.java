@@ -1,6 +1,6 @@
 package com.repository.manager.web.controller;
 
-import java.util.concurrent.ExecutionException;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +29,7 @@ public class AuthorizationController {
 
 	@GetMapping("/callback")
 	AuthorizationApiResponse getUserAccessTokenToOAuthApp(@RequestParam String code, @RequestParam String state)
-			throws InterruptedException, ExecutionException {
+			throws IOException {
 		if (!state.equals(dotenv.get("STATE")))
 			throw new IllegalArgumentException("State did not match.");
 		return authorizationService.getUserAccessToken(code);
