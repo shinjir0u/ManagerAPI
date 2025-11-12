@@ -26,7 +26,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	@Override
 	public RedirectView redirectUser() {
 		String url = UriComponentsBuilder.fromUriString("https://github.com/login/oauth/authorize")
-				.queryParam("client_id", dotenv.get("CLIENT_ID")).queryParam("state", "12345")
+				.queryParam("client_id", dotenv.get("CLIENT_ID")).queryParam("state", dotenv.get("STATE"))
 				.queryParam("scope", "user,repo").toUriString();
 		return new RedirectView(url);
 	}
