@@ -11,13 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.repository.manager.core.model.RepositoryResponse;
 import com.repository.manager.service.repository.RepositoryService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/repositories")
+@SecurityRequirement(name = "GithubAuthToken")
+@Tag(name = "Repository", description = "Perform operations on repositories")
 public class RepositoryController {
 	@Autowired
 	private RepositoryService repositoryService;
 
 	@GetMapping
+	@Operation(summary = "List repositories", description = "Get repositories of the authenticaed user")
+	@ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RepositoryResponse.class)))
 	public List<RepositoryResponse> getRepositories(@RequestHeader("Authorization") String authorizationToken)
 			throws Exception {
 		return repositoryService.listRepositories(authorizationToken);

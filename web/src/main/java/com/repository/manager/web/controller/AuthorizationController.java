@@ -31,9 +31,9 @@ public class AuthorizationController {
 	@Autowired
 	private AuthorizationService authorizationService;
 
-	@Operation(summary = "Redirects to Github Page to authorize the API")
-	@ApiResponse(responseCode = "200", description = "This endpoint calls the Github API for authoriaztion "
-			+ ", after which Github API will return the access token.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorizationApiResponse.class)))
+	@Operation(summary = "Redirects to Github Page to authorize the API", description = "This endpoint calls the Github API for authoriaztion "
+			+ ", after which Github API will return the access token.")
+	@ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorizationApiResponse.class)))
 	@GetMapping("/authorize")
 	RedirectView redirectUserToAuthorizationPage() {
 		return authorizationService.redirectUser();
