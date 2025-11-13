@@ -3,7 +3,6 @@ package com.repository.manager.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 
 @RestController
 @RequestMapping("/repositories")
@@ -32,7 +32,7 @@ public class RepositoryController {
 	@Operation(summary = "List repositories", description = "Get repositories of the authenticaed user")
 	@ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RepositoryResponse.class)))
 	public List<RepositoryResponse> getRepositories(@RequestHeader("Authorization") String authorizationToken,
-			@Nullable @RequestParam int page, @Nullable @RequestParam("per_page") int perPage,
+			@Nullable @RequestParam Integer page, @Nullable @RequestParam("per_page") Integer perPage,
 			@Nullable @RequestParam String sort) throws Exception {
 		return repositoryService.listRepositories(authorizationToken, page, perPage, sort);
 	}

@@ -14,6 +14,6 @@ public interface GithubApi {
 	@GET("user/repos")
 	@Headers({ "Accept: application/vnd.github+json", "X-GitHub-Api-Version: 2022-11-28" })
 	public Call<List<RepositoryResponse>> getRepositoriesOfAuthenticatedUser(
-			@Header("Authorization") String authorizationHeader, @Query("page") int page,
-			@Query("per_page") int perPage, @Query("sort") String sort);
+			@Header("Authorization") String authorizationHeader, @Query("page") Integer page,
+			@Query("per_page") Integer perPage, @Query("sort") String sort);
 }

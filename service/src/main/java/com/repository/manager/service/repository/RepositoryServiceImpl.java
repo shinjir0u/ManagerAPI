@@ -17,8 +17,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 	private GithubApi githubApi;
 
 	@Override
-	public List<RepositoryResponse> listRepositories(String authenticationToken, int page, int perPage, String sort)
-			throws Exception {
+	public List<RepositoryResponse> listRepositories(String authenticationToken, Integer page, Integer perPage,
+			String sort) throws Exception {
 		Call<List<RepositoryResponse>> call = githubApi.getRepositoriesOfAuthenticatedUser(authenticationToken, page,
 				perPage, sort);
 		Response<List<RepositoryResponse>> response = call.execute();

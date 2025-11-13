@@ -2,6 +2,7 @@ package com.repository.manager.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,15 +46,17 @@ public class RepositoryControllerTest {
 				.fullname("user/Repo2").url("google.com").description("This is repo 2").build();
 		List<RepositoryResponse> repositoryResponses = new ArrayList<>(
 				List.of(repositoryResponse1, repositoryResponse2));
-		given(repositoryService.listRepositories(any(String.class))).willReturn(repositoryResponses);
+		given(repositoryService.listRepositories(anyString(), any(Integer.class), any(Integer.class), anyString()))
+				.willReturn(repositoryResponses);
 
-		MvcResult mvcResult = mockMvc.perform(get("/repositories").header("Authorization", "12345"))
+		MvcResult mvcResult = mockMvc
+				.perform(get("/repositories?page=3&per_page=2&sort=created").header("Authorization", "12345"))
 				.andExpectAll(status().isOk(), content().contentType(MediaType.APPLICATION_JSON)).andReturn();
 
 		List<RepositoryResponse> responses = convertJsonStringToJson(mvcResult.getResponse().getContentAsString());
 		assertThat(responses.size()).isEqualTo(2);
 
-		verify(repositoryService).listRepositories(any(String.class));
+		verify(repositoryService).listRepositories(anyString(), any(Integer.class), any(Integer.class), anyString());
 	}
 
 	private static List<RepositoryResponse> convertJsonStringToJson(String jsonString)
