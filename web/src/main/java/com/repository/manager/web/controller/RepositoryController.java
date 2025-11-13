@@ -1,7 +1,6 @@
 package com.repository.manager.web.controller;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ public class RepositoryController {
 
 	@GetMapping
 	public List<RepositoryResponse> getRepositories(@RequestHeader("Authorization") String authorizationToken)
-			throws InterruptedException, ExecutionException {
+			throws Exception {
 		return repositoryService.listRepositories(authorizationToken);
 	}
 
