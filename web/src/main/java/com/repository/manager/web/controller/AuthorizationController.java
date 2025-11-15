@@ -15,15 +15,19 @@ import com.repository.manager.service.authorization.AuthorizationService;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/github")
 @Tag(name = "Authorization", description = "Authorize the App to Github Account")
+@SecurityScheme(name = "AuthorizationSecurity", in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.APIKEY, bearerFormat = "Bearer <Your API KEY>", description = "Authorize the app to connect to your github account.")
 @SecurityRequirement(name = "AppAuthToken")
 public class AuthorizationController {
 	Dotenv dotenv = Dotenv.load();

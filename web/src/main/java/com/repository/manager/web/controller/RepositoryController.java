@@ -13,16 +13,20 @@ import com.repository.manager.core.model.RepositoryResponse;
 import com.repository.manager.service.repository.RepositoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 
 @RestController
 @RequestMapping("/repositories")
 @SecurityRequirement(name = "GithubAuthToken")
+@SecurityScheme(name = "RepositorySecurity", in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.APIKEY, bearerFormat = "Bearer <Your API KEY>", description = "Authorize your account first to perform operations.")
 @Tag(name = "Repository", description = "Perform operations on repositories")
 public class RepositoryController {
 	@Autowired
