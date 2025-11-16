@@ -3,6 +3,8 @@ package com.repository.manager.web.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,11 +47,11 @@ public class AuthorizationController {
 
 	@Hidden
 	@GetMapping("/callback")
-	AuthorizationApiResponse getUserAccessTokenToOAuthApp(@RequestParam String code, @RequestParam String state)
-			throws IOException {
+	ResponseEntity<AuthorizationApiResponse> getUserAccessTokenToOAuthApp(@RequestParam String code,
+			@RequestParam String state) throws IOException {
 		if (!state.equals(dotenv.get("STATE")))
 			throw new IllegalArgumentException("State did not match.");
-		return authorizationService.getUserAccessToken(code);
-
+		AuthorizationApiResponse response = authorizationService.getUserAccessToken(code);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 }
