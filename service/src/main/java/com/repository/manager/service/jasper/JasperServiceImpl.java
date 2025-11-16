@@ -23,7 +23,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleDocxReportConfiguration;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
@@ -40,17 +39,9 @@ public class JasperServiceImpl implements JasperService {
 	@Override
 	public byte[] exportFile(String authorizationToken, String format) throws Exception {
 		String jrxmlFileName = "/repository-report.jrxml";
-		String jasperFileName = "/repository-report.jasper";
 
-		JasperReport jasperReport = null;
-
-		try {
-			InputStream jasperInputStream = getClass().getResourceAsStream(jasperFileName);
-			jasperReport = (JasperReport) JRLoader.loadObject(jasperInputStream);
-		} catch (Exception e) {
-			InputStream inputStream = getClass().getResourceAsStream(jrxmlFileName);
-			jasperReport = JasperCompileManager.compileReport(inputStream);
-		}
+		InputStream inputStream = getClass().getResourceAsStream(jrxmlFileName);
+		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("reportTitle", "Repository Report");
