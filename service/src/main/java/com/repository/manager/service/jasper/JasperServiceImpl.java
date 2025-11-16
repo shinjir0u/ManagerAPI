@@ -2,7 +2,9 @@ package com.repository.manager.service.jasper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,16 +47,19 @@ public class JasperServiceImpl implements JasperService {
 		try {
 			InputStream jasperInputStream = getClass().getResourceAsStream(jasperFileName);
 			jasperReport = (JasperReport) JRLoader.loadObject(jasperInputStream);
-		} catch (JRException e) {
+		} catch (Exception e) {
 			InputStream inputStream = getClass().getResourceAsStream(jrxmlFileName);
 			jasperReport = JasperCompileManager.compileReport(inputStream);
 		}
+
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("reportTitle", "Repository Report");
 
 		List<RepositoryResponse> repositories = repositoryService.listRepositories(authorizationToken, null, null,
 				null);
 		JRDataSource dataSource = new JRBeanCollectionDataSource(repositories);
 
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 		byte[] jasperExport = getFileByFormat(format, jasperPrint);
 
 		return jasperExport;

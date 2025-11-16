@@ -1,5 +1,7 @@
 package com.repository.manager.core.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ public class RepositoryResponse {
 	@Id
 	private Long id;
 	private String name;
+	@SerializedName("full_name")
 	private String fullname;
 	private String url;
 	private String description;
