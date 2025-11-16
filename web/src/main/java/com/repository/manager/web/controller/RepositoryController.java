@@ -3,13 +3,21 @@ package com.repository.manager.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.repository.manager.core.model.RepositoryResponse;
+import com.repository.manager.service.jasper.JasperService;
 import com.repository.manager.service.repository.RepositoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +40,9 @@ public class RepositoryController {
 	@Autowired
 	private RepositoryService repositoryService;
 
+	@Autowired
+	private JasperService jasperService;
+
 	@GetMapping
 	@Operation(summary = "List repositories", description = "Get repositories of the authenticaed user")
 	@ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RepositoryResponse.class)))
@@ -41,4 +52,19 @@ public class RepositoryController {
 		return repositoryService.listRepositories(authorizationToken, page, perPage, sort);
 	}
 
+	@GetMapping("/{format}")
+	@Operation(summary = "Export the repositories", description = "Export the repositories data in desired format. Available formats are pdf, html, docx and xlsx.")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Void.class)))
+	public ResponseEntity<Resource> exportRepositoryReport(@RequestHeader("Authorization") String authorizationToken,
+			@PathVariable String format) throws Exception {
+		byte[] exportData = jasperService.exportFile(authorizationToken, format);
+		ByteArrayResource resource = new ByteArrayResource(exportData);
+
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(resource.contentLength())
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						ContentDisposition.attachment().filename("repository-report." + format).build().toString())
+				.body(resource);
+
+	}
 }
