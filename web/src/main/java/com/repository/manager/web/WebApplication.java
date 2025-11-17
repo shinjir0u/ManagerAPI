@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-import com.repository.manager.web.security.Config;
+import com.repository.manager.security.config.SecurityConfig;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @OpenAPIDefinition(info = @Info(title = "Github Repository Management API", version = "1.0", description = "API for managing github repositories"))
 @SpringBootApplication(scanBasePackages = "com.repository.manager")
-@Import(Config.class)
+@Import(SecurityConfig.class)
 public class WebApplication {
 
 	public static void main(String[] args) {

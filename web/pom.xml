@@ -51,5 +51,9 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.repository</groupId>
+			<artifactId>security</artifactId>
+		</dependency>
 	</dependencies>
 </project>
