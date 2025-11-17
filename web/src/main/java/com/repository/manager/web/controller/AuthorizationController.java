@@ -3,6 +3,7 @@ package com.repository.manager.web.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.repository.manager.core.model.AuthorizationApiResponse;
 import com.repository.manager.service.authorization.AuthorizationService;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -32,7 +32,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityScheme(name = "AuthorizationSecurity", in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.APIKEY, bearerFormat = "Bearer <Your API KEY>", description = "Authorize the app to connect to your github account.")
 @SecurityRequirement(name = "AppAuthToken")
 public class AuthorizationController {
-	Dotenv dotenv = Dotenv.load();
+	@Value("${STATE}")
+	private String state;
 
 	@Autowired
 	private AuthorizationService authorizationService;
@@ -49,7 +50,7 @@ public class AuthorizationController {
 	@GetMapping("/callback")
 	ResponseEntity<AuthorizationApiResponse> getUserAccessTokenToOAuthApp(@RequestParam String code,
 			@RequestParam String state) throws IOException {
-		if (!state.equals(dotenv.get("STATE")))
+		if (!state.equals(state))
 			throw new IllegalArgumentException("State did not match.");
 		AuthorizationApiResponse response = authorizationService.getUserAccessToken(code);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);

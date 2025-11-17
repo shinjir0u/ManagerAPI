@@ -18,10 +18,10 @@
 			<groupId>com.repository</groupId>
 			<artifactId>core</artifactId>
 			</dependency>
-		<dependency>
-			<groupId>io.github.cdimascio</groupId>
-			<artifactId>dotenv-java</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>com.repository</groupId>
 			<artifactId>githubApi</artifactId>
