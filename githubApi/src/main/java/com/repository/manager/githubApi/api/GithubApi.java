@@ -26,5 +26,6 @@ public interface GithubApi {
 
 	@GET("repos/{owner}/{repo}/commits/{ref}")
 	@Headers({ "Accept: application/vnd.github+json" })
-	public Call<CommitResponse> getCommit(String owner, String repo, String ref, Integer page, Integer perPage);
+	public Call<CommitResponse> getCommit(@Path("owner") String owner, @Path("repo") String repo,
+			@Path("ref") String ref, @Query("page") Integer page, @Query("per_page") Integer perPage);
 }

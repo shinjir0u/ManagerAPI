@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class CommitResponse {
 	@SerializedName("html_url")
 	private String htmlUrl;
+	private String sha;
 	private Commit commit;
 }
