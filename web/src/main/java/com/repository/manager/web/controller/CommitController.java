@@ -22,9 +22,10 @@ public class CommitController {
 
 	@GetMapping
 	public ResponseEntity<List<CommitResponse>> getCommits(@PathVariable String owner, @PathVariable String repo,
+			@RequestParam(required = false) String since, @RequestParam(required = false) String until,
 			@RequestParam(required = false) Integer page,
 			@RequestParam(name = "per_page", required = false) Integer perPage) throws Exception {
-		List<CommitResponse> commitResponses = commitService.getCommits(owner, repo, page, perPage);
+		List<CommitResponse> commitResponses = commitService.getCommits(owner, repo, since, until, page, perPage);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(commitResponses);
 	}
 

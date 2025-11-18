@@ -14,4 +14,5 @@ public class CommitResponse {
 	private String htmlUrl;
 	private String sha;
 	private Commit commit;
+	private File[] files;
 }
