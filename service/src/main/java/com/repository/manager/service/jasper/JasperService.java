@@ -1,5 +1,7 @@
 package com.repository.manager.service.jasper;
 
+import java.util.List;
+
 public interface JasperService {
-	byte[] exportFile(String authorizationToken, String format) throws Exception;
+	byte[] exportFile(List<?> data, String format, String jrxmlFileName) throws Exception;
 }

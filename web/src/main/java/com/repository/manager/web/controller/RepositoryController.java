@@ -3,6 +3,7 @@ package com.repository.manager.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -29,7 +30,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
 
 @RestController
 @RequestMapping("/repositories")
@@ -43,12 +43,16 @@ public class RepositoryController {
 	@Autowired
 	private JasperService jasperService;
 
+	@Value("${repository.jrxml.report}")
+	private String jrxmlFileName;
+
 	@GetMapping
 	@Operation(summary = "List repositories", description = "Get repositories of the authenticaed user")
 	@ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RepositoryResponse.class)))
 	public List<RepositoryResponse> getRepositories(@RequestHeader("Authorization") String authorizationToken,
-			@Nullable @RequestParam Integer page, @Nullable @RequestParam("per_page") Integer perPage,
-			@Nullable @RequestParam String sort) throws Exception {
+			@RequestParam(required = false) Integer page,
+			@RequestParam(name = "per_page", required = false) Integer perPage,
+			@RequestParam(required = false) String sort) throws Exception {
 		return repositoryService.listRepositories(authorizationToken, page, perPage, sort);
 	}
 
@@ -57,7 +61,10 @@ public class RepositoryController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Void.class)))
 	public ResponseEntity<Resource> exportRepositoryReport(@RequestHeader("Authorization") String authorizationToken,
 			@PathVariable String format) throws Exception {
-		byte[] exportData = jasperService.exportFile(authorizationToken, format);
+
+		List<RepositoryResponse> repositoryResponses = repositoryService.listRepositories(authorizationToken, null,
+				null, null);
+		byte[] exportData = jasperService.exportFile(repositoryResponses, format, jrxmlFileName);
 		ByteArrayResource resource = new ByteArrayResource(exportData);
 
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)

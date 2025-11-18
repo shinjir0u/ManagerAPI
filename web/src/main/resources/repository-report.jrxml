@@ -10,7 +10,7 @@
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
     <!-- PARAMETERS -->
-    <parameter name="reportTitle" class="java.lang.String"/>
+    <parameter name="title" class="java.lang.String"/>
 
     <!-- FIELDS -->
     <field name="id" class="java.lang.Long"/>
@@ -27,7 +27,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="16" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
             </textField>
         </band>
     </title>

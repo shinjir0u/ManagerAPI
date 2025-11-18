@@ -6,11 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.repository.manager.core.model.RepositoryResponse;
-import com.repository.manager.service.repository.RepositoryService;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -32,23 +28,15 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 @Service
 public class JasperServiceImpl implements JasperService {
-
-	@Autowired
-	private RepositoryService repositoryService;
-
 	@Override
-	public byte[] exportFile(String authorizationToken, String format) throws Exception {
-		String jrxmlFileName = "/repository-report.jrxml";
-
+	public byte[] exportFile(List<?> data, String format, String jrxmlFileName) throws Exception {
 		InputStream inputStream = getClass().getResourceAsStream(jrxmlFileName);
 		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("reportTitle", "Repository Report");
+		parameters.put("title", "Report");
 
-		List<RepositoryResponse> repositories = repositoryService.listRepositories(authorizationToken, null, null,
-				null);
-		JRDataSource dataSource = new JRBeanCollectionDataSource(repositories);
+		JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 		byte[] jasperExport = getFileByFormat(format, jasperPrint);

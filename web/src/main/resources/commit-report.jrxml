@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="commit-report" pageWidth="595" pageHeight="842"
+              columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <!-- ====== PARAMETERS ====== -->
+    <parameter name="title" class="java.lang.String"/>
+
+    <!-- ====== FIELDS ====== -->
+    <field name="htmlUrl" class="java.lang.String"/>
+    <field name="sha" class="java.lang.String"/>
+    <field name="commit.author.name" class="java.lang.String"/>
+    <field name="commit.author.email" class="java.lang.String"/>
+    <field name="commit.author.date" class="java.util.Date"/>
+    <field name="commit.message" class="java.lang.String"/>
+
+    <!-- ====== TITLE BAND ====== -->
+    <title>
+        <band height="50">
+            <textField>
+                <reportElement x="0" y="10" width="555" height="30"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <!-- ======= DETAIL BAND (simple table layout) ======= -->
+    <detail>
+        <band height="180">
+            <!-- Row 1 -->
+            <textField>
+                <reportElement x="0" y="0" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["HTML URL"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="160" y="0" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$F{htmlUrl}]]></textFieldExpression>
+            </textField>
+
+            <!-- Row 2 -->
+            <textField>
+                <reportElement x="0" y="25" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["SHA"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="160" y="25" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$F{sha}]]></textFieldExpression>
+            </textField>
+
+            <!-- Row 3 -->
+            <textField>
+                <reportElement x="0" y="50" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["Author Name"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="160" y="50" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$F{commit.author.name}]]></textFieldExpression>
+            </textField>
+
+            <!-- Row 4 -->
+            <textField>
+                <reportElement x="0" y="75" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["Author Email"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="160" y="75" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$F{commit.author.email}]]></textFieldExpression>
+            </textField>
+
+            <!-- Row 5 -->
+            <textField>
+                <reportElement x="0" y="100" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["Date"]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="yyyy-MM-dd HH:mm:ss">
+                <reportElement x="160" y="100" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$F{commit.author.date}]]></textFieldExpression>
+            </textField>
+
+            <!-- Row 6 -->
+            <textField>
+                <reportElement x="0" y="125" width="150" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["Message"]]></textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="160" y="125" width="395" height="50"/>
+                <textFieldExpression><![CDATA[$F{commit.message}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+</jasperReport>
