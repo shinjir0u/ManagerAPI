@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,15 +15,24 @@ import com.repository.manager.core.model.commit.CommitResponse;
 import com.repository.manager.service.commit.CommitService;
 
 @RestController
+@RequestMapping("/{owner}/{repo}/commits")
 public class CommitController {
 	@Autowired
 	private CommitService commitService;
 
-	@GetMapping("/{owner}/{repo}/commits")
+	@GetMapping
 	public ResponseEntity<List<CommitResponse>> getCommits(@PathVariable String owner, @PathVariable String repo,
 			@RequestParam(required = false) Integer page,
 			@RequestParam(name = "per_page", required = false) Integer perPage) throws Exception {
 		List<CommitResponse> commitResponses = commitService.getCommits(owner, repo, page, perPage);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(commitResponses);
+	}
+
+	@GetMapping("/{ref}")
+	public ResponseEntity<CommitResponse> getCommit(@PathVariable String owner, @PathVariable String repo,
+			@PathVariable String ref, @RequestParam(required = false) Integer page,
+			@RequestParam(name = "per_page", required = false) Integer perPage) throws Exception {
+		CommitResponse commitResponse = commitService.getCommit(owner, repo, ref, page, perPage);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(commitResponse);
 	}
 }

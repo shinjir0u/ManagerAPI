@@ -34,4 +34,15 @@ public class CommitServiceImpl implements CommitService {
 		throw new Exception("No such commit");
 	}
 
+	@Override
+	public CommitResponse getCommit(String owner, String repo, String ref, Integer page, Integer perPage)
+			throws Exception {
+		Call<CommitResponse> call = githubApi.getCommit(owner, repo, ref, page, perPage);
+		Response<CommitResponse> response = call.execute();
+
+		if (response.isSuccessful())
+			return response.body();
+		throw new Exception("No such commit");
+	}
+
 }
