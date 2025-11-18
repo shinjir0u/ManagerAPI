@@ -28,9 +28,8 @@ public class CommitServiceImpl implements CommitService {
 	}
 
 	@Override
-	public CommitResponse getCommit(String owner, String repo, String ref, Integer page, Integer perPage)
-			throws Exception {
-		Call<CommitResponse> call = githubApi.getCommit(owner, repo, ref, page, perPage);
+	public CommitResponse getCommit(String owner, String repo, String ref) throws Exception {
+		Call<CommitResponse> call = githubApi.getCommit(owner, repo, ref);
 		Response<CommitResponse> response = call.execute();
 
 		if (response.isSuccessful())
