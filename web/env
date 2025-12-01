@@ -1,0 +1,14 @@
+STATE=12345
+FRONTEND_CALLBACK=http://localhost:5173/success
+CLIENT_ID=Ov23liQvcH5bqSwCFVjU
+CLIENT_SECRET=8e2f920a048eee300a1a03256cfaf25447b6e31c
+
+MAIL_USERNAME=htooagwai9@gmail.com
+MAIL_PASSWORD=dvhkvmevcncsjwxb
+
+REPOSITORY_FILENAME="/repository-report.jrxml"
+COMMIT_FILENAME="/commit-report.jrxml"
+SINGLE_COMMIT_FILENAME="/single-commit-report.jrxml"
+
+DATABASE_USERNAME=momoney
+DATABASE_PASSWORD=NopleasE10#
