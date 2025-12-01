@@ -119,6 +119,7 @@
 		<module>service</module>
 		<module>core</module>
 		<module>security</module>
+		<module>persistence</module>
 	</modules>
 
 </project>

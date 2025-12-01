@@ -47,7 +47,7 @@ public class AuthorizationController {
 	}
 
 	@Hidden
-	@GetMapping("/callback")
+	@GetMapping("/login")
 	ResponseEntity<AuthorizationApiResponse> getUserAccessTokenToOAuthApp(@RequestParam String code,
 			@RequestParam String state) throws IOException {
 		if (!state.equals(state))
