@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.repository.manager.core.model.AuthorizationApiResponse;
+import com.repository.manager.persistence.entity.Token;
 import com.repository.manager.service.github_authorization.AuthorizationService;
 import com.repository.manager.web.controller.GithubAuthorizationController;
 
@@ -46,25 +46,22 @@ public class AuthenticationControllerTest {
 
 	@Test
 	public void getUserAccessTokenTest() throws Exception {
-		AuthorizationApiResponse response = AuthorizationApiResponse.builder().accessToken("I'm access token")
-				.scope("repo").tokenType("I'm token type").build();
+		Token response = Token.builder().value("I'm token").build();
 
 		given(authorizationService.getUserAccessToken(any(String.class))).willReturn(response);
 
 		MvcResult mvcResult = mockMvc.perform(get("/github/callback?code=12345&state=12345"))
 				.andExpectAll(status().isOk(), content().contentType(MediaType.APPLICATION_JSON)).andReturn();
 
-		AuthorizationApiResponse apiResponse = convertJsonStringToJson(mvcResult.getResponse().getContentAsString());
-		assertThat(apiResponse.getAccessToken()).isEqualTo(response.getAccessToken());
-		assertThat(apiResponse.getScope()).isEqualTo(response.getScope());
-		assertThat(apiResponse.getTokenType()).isEqualTo(response.getTokenType());
+		Token apiResponse = convertJsonStringToJson(mvcResult.getResponse().getContentAsString());
+		assertThat(apiResponse.getValue()).isEqualTo(response.getValue());
 
 		verify(authorizationService).getUserAccessToken(any(String.class));
 	}
 
-	private static AuthorizationApiResponse convertJsonStringToJson(String jsonString)
+	private static Token convertJsonStringToJson(String jsonString)
 			throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(jsonString, AuthorizationApiResponse.class);
+		return objectMapper.readValue(jsonString, Token.class);
 	}
 }

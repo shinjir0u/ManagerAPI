@@ -28,14 +28,19 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String email;
+
 	private String password;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "jwt_token", referencedColumnName = "id")
 	private Token jwtToken;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "github_token", referencedColumnName = "id")
 	private Token githubToken;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;

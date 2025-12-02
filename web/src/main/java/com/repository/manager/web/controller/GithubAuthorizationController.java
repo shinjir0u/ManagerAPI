@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.repository.manager.core.model.AuthorizationApiResponse;
+import com.repository.manager.persistence.entity.Token;
 import com.repository.manager.service.github_authorization.AuthorizationService;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -48,11 +49,11 @@ public class GithubAuthorizationController {
 
 	@Hidden
 	@GetMapping("/login")
-	ResponseEntity<AuthorizationApiResponse> getUserAccessTokenToOAuthApp(@RequestParam String code,
-			@RequestParam String state) throws IOException {
+	ResponseEntity<Token> getUserAccessTokenToOAuthApp(@RequestParam String code, @RequestParam String state)
+			throws IOException {
 		if (!state.equals(state))
 			throw new IllegalArgumentException("State did not match.");
-		AuthorizationApiResponse response = authorizationService.getUserAccessToken(code);
+		Token response = authorizationService.getUserAccessToken(code);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 }

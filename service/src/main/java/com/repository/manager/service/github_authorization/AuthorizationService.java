@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.repository.manager.core.model.AuthorizationApiResponse;
+import com.repository.manager.persistence.entity.Token;
 
 @Service
 public interface AuthorizationService {
 	RedirectView redirectUser();
 
-	AuthorizationApiResponse getUserAccessToken(String code) throws IOException;
+	Token getUserAccessToken(String code) throws IOException;
 }
