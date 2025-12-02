@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.repository.manager.core.model.AuthorizationApiResponse;
-import com.repository.manager.service.authorization.AuthorizationService;
+import com.repository.manager.service.github_authorization.AuthorizationService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Authorization", description = "Authorize the App to Github Account")
 @SecurityScheme(name = "AuthorizationSecurity", in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.APIKEY, bearerFormat = "Bearer <Your API KEY>", description = "Authorize the app to connect to your github account.")
 @SecurityRequirement(name = "AppAuthToken")
-public class AuthorizationController {
+public class GithubAuthorizationController {
 	@Value("${STATE}")
 	private String state;
 

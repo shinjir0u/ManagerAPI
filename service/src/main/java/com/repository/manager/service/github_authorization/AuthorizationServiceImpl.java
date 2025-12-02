@@ -1,4 +1,4 @@
-package com.repository.manager.service.authorization;
+package com.repository.manager.service.github_authorization;
 
 import java.io.IOException;
 

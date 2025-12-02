@@ -23,10 +23,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.repository.manager.core.model.AuthorizationApiResponse;
-import com.repository.manager.service.authorization.AuthorizationService;
-import com.repository.manager.web.controller.AuthorizationController;
+import com.repository.manager.service.github_authorization.AuthorizationService;
+import com.repository.manager.web.controller.GithubAuthorizationController;
 
-@WebMvcTest(controllers = AuthorizationController.class)
+@WebMvcTest(controllers = GithubAuthorizationController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthenticationControllerTest {
 	@Autowired

@@ -13,5 +13,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.repository</groupId>
+			<artifactId>service</artifactId>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,5 +1,7 @@
 package com.repository.manager.persistence.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,5 +26,5 @@ public class Role {
 	@Column(name = "role_name")
 	private String name;
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-	private User user;
+	private List<User> users;
 }
