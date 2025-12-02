@@ -23,7 +23,8 @@ public class Token {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String token;
+	@Column(name = "token")
+	private String value;
 	@Column(name = "expires_at")
 	private Date expiresAt;
 }

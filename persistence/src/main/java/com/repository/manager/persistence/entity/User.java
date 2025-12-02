@@ -32,7 +32,7 @@ public class User {
 	private String password;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "jwt_token", referencedColumnName = "id")
-	private Token jwToken;
+	private Token jwtToken;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "github_token", referencedColumnName = "id")
 	private Token githubToken;

@@ -1,5 +1,6 @@
 package com.repository.manager.service.jwt_authorization;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.repository.manager.persistence.entity.Role;
+import com.repository.manager.persistence.entity.Token;
 import com.repository.manager.persistence.entity.User;
 import com.repository.manager.persistence.repository.RoleRepository;
+import com.repository.manager.persistence.repository.TokenRepository;
 import com.repository.manager.persistence.repository.UserRepository;
 
 @Service
@@ -30,16 +33,35 @@ public class AuthServiceImpl implements AuthService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private TokenRepository tokenRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public String login(String email, String password) {
+	public Token login(String email, String password) {
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		if (authentication.isAuthenticated())
-			return jwtService.generateToken(email);
-		else
+		if (!authentication.isAuthenticated())
 			throw new UsernameNotFoundException("Invalid credentials");
+
+		User user = userRepository.findByEmail(email).orElse(null);
+		Token jwtToken = user.getJwtToken();
+		Token generatedToken = null;
+
+		if (jwtToken != null) {
+			Token token = tokenRepository.findById(jwtToken.getId()).orElse(null);
+			if (token.getExpiresAt().after(new Date()))
+				generatedToken = token;
+			else {
+				String tokenValue = jwtService.generateToken(email);
+				generatedToken = saveJwtTokenToUser(user, tokenValue);
+			}
+		} else {
+			String tokenValue = jwtService.generateToken(email);
+			generatedToken = saveJwtTokenToUser(user, tokenValue);
+		}
+		return generatedToken;
 	}
 
 	public String addUser(User user) {
@@ -49,6 +71,16 @@ public class AuthServiceImpl implements AuthService {
 				.roles(List.of(role)).build();
 		userRepository.save(newUser);
 		return "User added successfully";
+	}
+
+	public Token saveJwtTokenToUser(User user, String tokenValue) {
+		Date tokenExpiration = jwtService.extractExpiration(tokenValue);
+		Token token = Token.builder().value(tokenValue).expiresAt(tokenExpiration).build();
+
+		user.setJwtToken(token);
+		tokenRepository.save(token);
+		userRepository.save(user);
+		return token;
 	}
 
 }
