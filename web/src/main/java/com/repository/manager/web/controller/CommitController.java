@@ -21,7 +21,7 @@ import com.repository.manager.service.commit.CommitService;
 import com.repository.manager.service.jasper.JasperService;
 
 @RestController
-@RequestMapping("/{owner}/{repo}/commits")
+@RequestMapping("repos/{owner}/{repo}/commits")
 public class CommitController {
 	@Autowired
 	private CommitService commitService;

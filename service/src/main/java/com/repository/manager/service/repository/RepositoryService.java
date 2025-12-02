@@ -5,6 +5,5 @@ import java.util.List;
 import com.repository.manager.core.model.RepositoryResponse;
 
 public interface RepositoryService {
-	List<RepositoryResponse> listRepositories(String authenticationToken, Integer page, Integer perPage, String sort)
-			throws Exception;
+	List<RepositoryResponse> listRepositories(Integer page, Integer perPage, String sort) throws Exception;
 }

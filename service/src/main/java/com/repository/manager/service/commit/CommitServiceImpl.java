@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.repository.manager.core.model.commit.CommitResponse;
 import com.repository.manager.githubApi.api.GithubApi;
+import com.repository.manager.service.current_user.CurrentUserService;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -16,10 +17,15 @@ public class CommitServiceImpl implements CommitService {
 	@Autowired
 	private GithubApi githubApi;
 
+	@Autowired
+	private CurrentUserService currentUserService;
+
 	@Override
 	public List<CommitResponse> getCommits(String owner, String repository, String since, String until, Integer page,
 			Integer perPage) throws Exception {
-		Call<List<CommitResponse>> call = githubApi.getCommitsOfARepo(owner, repository, since, until, page, perPage);
+		String authenticationToken = currentUserService.getGithubToken();
+		Call<List<CommitResponse>> call = githubApi.getCommitsOfARepo(authenticationToken, owner, repository, since,
+				until, page, perPage);
 		Response<List<CommitResponse>> response = call.execute();
 
 		if (response.isSuccessful())
@@ -29,7 +35,8 @@ public class CommitServiceImpl implements CommitService {
 
 	@Override
 	public CommitResponse getCommit(String owner, String repo, String ref) throws Exception {
-		Call<CommitResponse> call = githubApi.getCommit(owner, repo, ref);
+		String authenticationToken = currentUserService.getGithubToken();
+		Call<CommitResponse> call = githubApi.getCommit(authenticationToken, owner, repo, ref);
 		Response<CommitResponse> response = call.execute();
 
 		if (response.isSuccessful())

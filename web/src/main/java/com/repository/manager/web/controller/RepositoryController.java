@@ -32,7 +32,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/repositories")
+@RequestMapping("/repos")
 @SecurityRequirement(name = "GithubAuthToken")
 @SecurityScheme(name = "RepositorySecurity", in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.APIKEY, bearerFormat = "Bearer <Your API KEY>", description = "Authorize your account first to perform operations.")
 @Tag(name = "Repository", description = "Perform operations on repositories")
@@ -53,7 +53,7 @@ public class RepositoryController {
 			@RequestParam(required = false) Integer page,
 			@RequestParam(name = "per_page", required = false) Integer perPage,
 			@RequestParam(required = false) String sort) throws Exception {
-		return repositoryService.listRepositories(authorizationToken, page, perPage, sort);
+		return repositoryService.listRepositories(page, perPage, sort);
 	}
 
 	@GetMapping("/{format}")
@@ -62,8 +62,7 @@ public class RepositoryController {
 	public ResponseEntity<Resource> exportRepositoryReport(@RequestHeader("Authorization") String authorizationToken,
 			@PathVariable String format) throws Exception {
 
-		List<RepositoryResponse> repositoryResponses = repositoryService.listRepositories(authorizationToken, null,
-				null, null);
+		List<RepositoryResponse> repositoryResponses = repositoryService.listRepositories(null, null, null);
 		byte[] exportData = jasperService.exportFile(repositoryResponses, format, jrxmlFileName);
 		ByteArrayResource resource = new ByteArrayResource(exportData);
 

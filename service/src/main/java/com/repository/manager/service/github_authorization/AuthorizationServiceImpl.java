@@ -44,6 +44,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	@Autowired
 	private TokenRepository tokenRepository;
 
+	@Autowired
+	private CurrentUserService currentUserService;
+
 	@Override
 	public RedirectView redirectUser() {
 		String url = UriComponentsBuilder.fromUriString("https://github.com/login/oauth/authorize")
@@ -54,7 +57,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 	@Override
 	public Token getUserAccessToken(String code) throws IOException {
-		String email = CurrentUserService.getCurrentUser();
+		String email = currentUserService.getCurrentUser();
 		User user = userRepository.findByEmail(email).orElse(null);
 		Token generatedToken = null;
 

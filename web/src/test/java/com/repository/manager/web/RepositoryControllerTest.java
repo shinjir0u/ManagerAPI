@@ -50,7 +50,7 @@ public class RepositoryControllerTest {
 				.fullname("user/Repo2").url("google.com").description("This is repo 2").build();
 		List<RepositoryResponse> repositoryResponses = new ArrayList<>(
 				List.of(repositoryResponse1, repositoryResponse2));
-		given(repositoryService.listRepositories(anyString(), any(Integer.class), any(Integer.class), anyString()))
+		given(repositoryService.listRepositories(any(Integer.class), any(Integer.class), anyString()))
 				.willReturn(repositoryResponses);
 
 		MvcResult mvcResult = mockMvc
@@ -60,7 +60,7 @@ public class RepositoryControllerTest {
 		List<RepositoryResponse> responses = convertJsonStringToJson(mvcResult.getResponse().getContentAsString());
 		assertThat(responses.size()).isEqualTo(2);
 
-		verify(repositoryService).listRepositories(anyString(), any(Integer.class), any(Integer.class), anyString());
+		verify(repositoryService).listRepositories(any(Integer.class), any(Integer.class), anyString());
 	}
 
 	private static List<RepositoryResponse> convertJsonStringToJson(String jsonString)

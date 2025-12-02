@@ -29,12 +29,12 @@ public interface GithubApi {
 
 	@GET("repos/{owner}/{repo}/commits")
 	@Headers({ "Accept: application/vnd.github+json" })
-	public Call<List<CommitResponse>> getCommitsOfARepo(@Path("owner") String owner, @Path("repo") String repo,
-			@Query("since") String since, @Query("until") String until, @Query("page") Integer page,
-			@Query("per_page") Integer perPage);
+	public Call<List<CommitResponse>> getCommitsOfARepo(@Header("Authorization") String authorizationHeader,
+			@Path("owner") String owner, @Path("repo") String repo, @Query("since") String since,
+			@Query("until") String until, @Query("page") Integer page, @Query("per_page") Integer perPage);
 
 	@GET("repos/{owner}/{repo}/commits/{ref}")
 	@Headers({ "Accept: application/vnd.github+json" })
-	public Call<CommitResponse> getCommit(@Path("owner") String owner, @Path("repo") String repo,
-			@Path("ref") String ref);
+	public Call<CommitResponse> getCommit(@Header("Authorization") String authorizationHeader,
+			@Path("owner") String owner, @Path("repo") String repo, @Path("ref") String ref);
 }
