@@ -10,8 +10,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.repository.manager.core.model.AuthorizationApiResponse;
-import com.repository.manager.githubApi.api.GithubApi;
-import com.repository.manager.githubApi.api.GithubAuthApi;
+import com.repository.manager.github_api.api.GithubApi;
+import com.repository.manager.github_api.api.GithubAuthApi;
 import com.repository.manager.persistence.entity.Token;
 import com.repository.manager.persistence.entity.User;
 import com.repository.manager.persistence.repository.TokenRepository;

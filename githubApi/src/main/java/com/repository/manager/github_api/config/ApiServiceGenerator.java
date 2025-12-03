@@ -1,4 +1,4 @@
-package com.repository.manager.githubApi.config;
+package com.repository.manager.github_api.config;
 
 import okhttp3.OkHttpClient;
 import okhttp3.OkHttpClient.Builder;

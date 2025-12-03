@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.repository.manager.core.model.RepositoryResponse;
-import com.repository.manager.githubApi.api.GithubApi;
+import com.repository.manager.github_api.api.GithubApi;
 import com.repository.manager.service.current_user.CurrentUserService;
 
 import retrofit2.Call;

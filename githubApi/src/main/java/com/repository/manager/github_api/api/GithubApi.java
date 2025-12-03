@@ -1,4 +1,4 @@
-package com.repository.manager.githubApi.api;
+package com.repository.manager.github_api.api;
 
 import java.util.List;
 

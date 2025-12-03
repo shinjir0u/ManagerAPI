@@ -1,10 +1,10 @@
-package com.repository.manager.githubApi.config;
+package com.repository.manager.github_api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.repository.manager.githubApi.api.GithubApi;
-import com.repository.manager.githubApi.api.GithubAuthApi;
+import com.repository.manager.github_api.api.GithubApi;
+import com.repository.manager.github_api.api.GithubAuthApi;
 
 import retrofit2.Retrofit;
 

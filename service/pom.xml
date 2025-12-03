@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.repository</groupId>
-			<artifactId>githubApi</artifactId>
+			<artifactId>github_api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>

@@ -7,7 +7,7 @@
 		<artifactId>manager</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent> 
-	<artifactId>githubApi</artifactId>
+	<artifactId>github_api</artifactId>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
