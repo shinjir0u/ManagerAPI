@@ -20,6 +20,7 @@ public class RepositoryResponse {
 	private String name;
 	@SerializedName("full_name")
 	private String fullname;
+	@SerializedName("html_url")
 	private String url;
 	private String description;
 }
