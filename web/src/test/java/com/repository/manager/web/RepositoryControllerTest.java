@@ -26,7 +26,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.repository.manager.core.model.RepositoryResponse;
-import com.repository.manager.service.jasper.JasperService;
 import com.repository.manager.service.repository.RepositoryService;
 import com.repository.manager.web.controller.RepositoryController;
 
@@ -35,9 +34,6 @@ import com.repository.manager.web.controller.RepositoryController;
 public class RepositoryControllerTest {
 	@MockitoBean
 	private RepositoryService repositoryService;
-
-	@MockitoBean
-	private JasperService jasperService;
 
 	@Autowired
 	private MockMvc mockMvc;
